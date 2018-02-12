@@ -195,9 +195,85 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802100552532_Initial.cs" />
+    <Compile Include="Migrations\201802100552532_Initial.Designer.cs">
+      <DependentUpon>201802100552532_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802100608226_Split-Rename-AppUser.cs" />
+    <Compile Include="Migrations\201802100608226_Split-Rename-AppUser.Designer.cs">
+      <DependentUpon>201802100608226_Split-Rename-AppUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802100645251_Add-User-Properties.cs" />
+    <Compile Include="Migrations\201802100645251_Add-User-Properties.Designer.cs">
+      <DependentUpon>201802100645251_Add-User-Properties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802100656485_Remove-Phone.cs" />
+    <Compile Include="Migrations\201802100656485_Remove-Phone.Designer.cs">
+      <DependentUpon>201802100656485_Remove-Phone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802100836114_Add-WebSiteComments-Class.cs" />
+    <Compile Include="Migrations\201802100836114_Add-WebSiteComments-Class.Designer.cs">
+      <DependentUpon>201802100836114_Add-WebSiteComments-Class.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802100921106_Website-Cmnt-UserId-2-string.cs" />
+    <Compile Include="Migrations\201802100921106_Website-Cmnt-UserId-2-string.Designer.cs">
+      <DependentUpon>201802100921106_Website-Cmnt-UserId-2-string.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802102335129_Add-Restaurant.cs" />
+    <Compile Include="Migrations\201802102335129_Add-Restaurant.Designer.cs">
+      <DependentUpon>201802102335129_Add-Restaurant.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802110042469_Move-Reviews-Comments-2-User.cs" />
+    <Compile Include="Migrations\201802110042469_Move-Reviews-Comments-2-User.Designer.cs">
+      <DependentUpon>201802110042469_Move-Reviews-Comments-2-User.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802110107325_Restore-Comments-Reviews.cs" />
+    <Compile Include="Migrations\201802110107325_Restore-Comments-Reviews.Designer.cs">
+      <DependentUpon>201802110107325_Restore-Comments-Reviews.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802110112599_Restore-Comments-Reviews-2.cs" />
+    <Compile Include="Migrations\201802110112599_Restore-Comments-Reviews-2.Designer.cs">
+      <DependentUpon>201802110112599_Restore-Comments-Reviews-2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802110133008_UserId-4-Review-2-string.cs" />
+    <Compile Include="Migrations\201802110133008_UserId-4-Review-2-string.Designer.cs">
+      <DependentUpon>201802110133008_UserId-4-Review-2-string.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802110732245_Add-Answer.cs" />
+    <Compile Include="Migrations\201802110732245_Add-Answer.Designer.cs">
+      <DependentUpon>201802110732245_Add-Answer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802112206578_Add-Quest-AnsOpt-FKs.cs" />
+    <Compile Include="Migrations\201802112206578_Add-Quest-AnsOpt-FKs.Designer.cs">
+      <DependentUpon>201802112206578_Add-Quest-AnsOpt-FKs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802112243555_Key-to-quest-review.cs" />
+    <Compile Include="Migrations\201802112243555_Key-to-quest-review.Designer.cs">
+      <DependentUpon>201802112243555_Key-to-quest-review.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802112338337_Add-AnswerOpt-dbSet.cs" />
+    <Compile Include="Migrations\201802112338337_Add-AnswerOpt-dbSet.Designer.cs">
+      <DependentUpon>201802112338337_Add-AnswerOpt-dbSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802120436400_Adding-User-Fields-2-code.cs" />
+    <Compile Include="Migrations\201802120436400_Adding-User-Fields-2-code.Designer.cs">
+      <DependentUpon>201802120436400_Adding-User-Fields-2-code.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802120648528_Unknown-chngs-2-AcctCtrlr-AcctVwMdl.cs" />
+    <Compile Include="Migrations\201802120648528_Unknown-chngs-2-AcctCtrlr-AcctVwMdl.Designer.cs">
+      <DependentUpon>201802120648528_Unknown-chngs-2-AcctCtrlr-AcctVwMdl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\AnswerOpt.cs" />
+    <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\Restaurant.cs" />
+    <Compile Include="Models\Review.cs" />
+    <Compile Include="Models\WebSiteComment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -274,6 +350,59 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201802100552532_Initial.resx">
+      <DependentUpon>201802100552532_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802100608226_Split-Rename-AppUser.resx">
+      <DependentUpon>201802100608226_Split-Rename-AppUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802100645251_Add-User-Properties.resx">
+      <DependentUpon>201802100645251_Add-User-Properties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802100656485_Remove-Phone.resx">
+      <DependentUpon>201802100656485_Remove-Phone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802100836114_Add-WebSiteComments-Class.resx">
+      <DependentUpon>201802100836114_Add-WebSiteComments-Class.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802100921106_Website-Cmnt-UserId-2-string.resx">
+      <DependentUpon>201802100921106_Website-Cmnt-UserId-2-string.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802102335129_Add-Restaurant.resx">
+      <DependentUpon>201802102335129_Add-Restaurant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802110042469_Move-Reviews-Comments-2-User.resx">
+      <DependentUpon>201802110042469_Move-Reviews-Comments-2-User.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802110107325_Restore-Comments-Reviews.resx">
+      <DependentUpon>201802110107325_Restore-Comments-Reviews.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802110112599_Restore-Comments-Reviews-2.resx">
+      <DependentUpon>201802110112599_Restore-Comments-Reviews-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802110133008_UserId-4-Review-2-string.resx">
+      <DependentUpon>201802110133008_UserId-4-Review-2-string.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802110732245_Add-Answer.resx">
+      <DependentUpon>201802110732245_Add-Answer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802112206578_Add-Quest-AnsOpt-FKs.resx">
+      <DependentUpon>201802112206578_Add-Quest-AnsOpt-FKs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802112243555_Key-to-quest-review.resx">
+      <DependentUpon>201802112243555_Key-to-quest-review.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802112338337_Add-AnswerOpt-dbSet.resx">
+      <DependentUpon>201802112338337_Add-AnswerOpt-dbSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802120436400_Adding-User-Fields-2-code.resx">
+      <DependentUpon>201802120436400_Adding-User-Fields-2-code.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802120648528_Unknown-chngs-2-AcctCtrlr-AcctVwMdl.resx">
+      <DependentUpon>201802120648528_Unknown-chngs-2-AcctCtrlr-AcctVwMdl.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

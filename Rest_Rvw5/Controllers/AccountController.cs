@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -12,7 +10,7 @@ using Rest_Rvw5.Models;
 
 namespace Rest_Rvw5.Controllers
 {
-    [Authorize]
+  [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -152,6 +150,17 @@ namespace Rest_Rvw5.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+                user.ScreenName = model.ScreenName;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Address = model.Address;
+                user.Address2 = model.Address2;
+                user.City = model.City;
+                user.State = model.State;
+                user.Zip = model.Zip;
+                user.UserSince = DateTime.Now;
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
