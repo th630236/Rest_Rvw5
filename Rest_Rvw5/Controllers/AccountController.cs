@@ -182,8 +182,44 @@ namespace Rest_Rvw5.Controllers
         }
 
         //
-        // GET: /Account/ConfirmEmail
-        [AllowAnonymous]
+        // POST: /Account/Update Account Info
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UpdateAcctInfo(RegisterViewModel model)
+        {
+          if (ModelState.IsValid)
+          {
+            string strUserId = SignInManager.GetVerifiedUserId();
+            if (strUserId != null)
+            {
+              var user = UserManager.FindById(strUserId);
+
+              user.ScreenName = model.ScreenName;
+              user.FirstName = model.FirstName;
+              user.LastName = model.LastName;
+              user.Address = model.Address;
+              user.Address2 = model.Address2;
+              user.City = model.City;
+              user.State = model.State;
+              user.Zip = model.Zip;
+              user.UserSince = DateTime.Now;
+
+              var result = await UserManager.UpdateAsync(user);
+
+              if (result.Succeeded)
+              {
+                return RedirectToAction("Index", "Home");
+              }
+              AddErrors(result);
+            }
+          }
+          // If we got this far, something failed, redisplay form
+          return View(model);          
+        }
+
+    //
+    // GET: /Account/ConfirmEmail
+    [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
