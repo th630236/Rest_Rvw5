@@ -112,6 +112,46 @@ namespace Rest_Rvw5.Models
         public string ScreenName { get; set; }
   }
 
+  public class UpdateAcctInfoModel
+  {
+    [Required]
+    [EmailAddress]
+    [Display(Name = "Email")]
+    public string Email { get; set; }
+
+    [Required]
+    [Display(Name = "First Name")]
+    public string FirstName { get; set; }
+
+    [Required]
+    [Display(Name = "Last Name")]
+    public string LastName { get; set; }
+
+    [Required]
+    [Display(Name = "Address")]
+    public string Address { get; set; }
+
+    [Display(Name = "Address 2")]
+    public string Address2 { get; set; }
+
+    [Required]
+    [Display(Name = "City")]
+    public string City { get; set; }
+
+    [Required]
+    [Display(Name = "State")]
+    public string State { get; set; }
+
+    [Required]
+    [Display(Name = "Zip")]
+    public string Zip { get; set; }
+
+    [Required]
+    [Display(Name = "Screen Name")]
+    public string ScreenName { get; set; }
+  }
+
+
   public class ResetPasswordViewModel
     {
         [Required]

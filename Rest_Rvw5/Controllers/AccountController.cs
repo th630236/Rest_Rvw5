@@ -182,10 +182,17 @@ namespace Rest_Rvw5.Controllers
         }
 
         //
+        // GET: /Account/Update Acct Info
+        public ActionResult UpdateAcctInfo()
+        {
+          return View();
+        }
+
+        //
         // POST: /Account/Update Account Info
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> UpdateAcctInfo(RegisterViewModel model)
+        public async Task<ActionResult> UpdateAcctInfo(UpdateAcctInfoModel model)
         {
           if (ModelState.IsValid)
           {
