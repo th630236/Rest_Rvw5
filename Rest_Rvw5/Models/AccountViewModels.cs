@@ -1,5 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Owin;
+using Microsoft.Owin.Security;
+using System.Web;
+using System.Web.WebPages;
+using Microsoft.Owin.Host.SystemWeb;
 
 namespace Rest_Rvw5.Models
 {
@@ -114,11 +122,38 @@ namespace Rest_Rvw5.Models
 
   public class UpdateAcctInfoModel
   {
+    public UpdateAcctInfoModel()
+    {
+      /*
+      var userManager = (ApplicationUserManager)HttpContext.Current.GetOwinContext().Get<ApplicationUserManager>();
+      var SignInManager = (ApplicationSignInManager)HttpContext.Current.GetOwinContext().Get<ApplicationSignInManager>();
+
+      string strUserId = SignInManager.GetVerifiedUserId();
+      if (strUserId != null)
+      {
+        var user = userManager.FindById(strUserId);
+
+        Email = user.Email;
+        ScreenName = user.ScreenName;
+        FirstName = user.FirstName;
+        LastName = user.LastName;
+        Address = user.Address;
+        Address2 = user.Address2;
+        City = user.City;
+        State = user.State;
+        Zip = user.Zip;
+
+        //var user = (ApplicationUser)GetOwinContext().Get<ApplicationUserManager>();
+        //ApplicationUser au = OwinContext
+        
+      } */
+    }
+
     [Required]
     [EmailAddress]
     [Display(Name = "Email")]
     public string Email { get; set; }
-
+   
     [Required]
     [Display(Name = "First Name")]
     public string FirstName { get; set; }

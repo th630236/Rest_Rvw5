@@ -11,15 +11,25 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Rest_Rvw5.Models;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Configuration;
 
 namespace Rest_Rvw5
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+          // Plug in your email service here to send an email.
+          var client = new SendGridClient(ConfigurationManager.AppSettings["sendgrid:Key"]);
+          var from = new EmailAddress("timh412@inebraska.com");
+          var to = new EmailAddress(message.Destination);
+          var email = MailHelper.CreateSingleEmail(@from, to, message.Subject, message.Body, message.Body);
+
+          await client.SendEmailAsync(email);
+
+            //return Task.FromResult(0);
         }
     }
 

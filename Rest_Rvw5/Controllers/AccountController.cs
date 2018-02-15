@@ -168,9 +168,9 @@ namespace Rest_Rvw5.Controllers
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your Restaurant Review Account", "Please Confirm your Restaurant Review 5 Account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -183,9 +183,27 @@ namespace Rest_Rvw5.Controllers
 
         //
         // GET: /Account/Update Acct Info
-        public ActionResult UpdateAcctInfo()
+        public async Task<ActionResult> UpdateAcctInfo()
         {
-          return View();
+          // string userId = await SignInManager.GetVerifiedUserIdAsync();
+          //if (userId != null)
+          //{
+          //ApplicationUser user = await UserManager.FindByIdAsync(userId);
+          var user = UserManager.FindByEmail("gayleh@inebraska.com");
+          return View(new UpdateAcctInfoModel {
+                Email = user.Email,
+                ScreenName = user.ScreenName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Address = user.Address,
+                Address2 = user.Address2,
+                City = user.City,
+                State = user.State,
+                Zip = user.Zip
+              });
+            //}
+            //else
+              //return View("Error");
         }
 
         //
@@ -196,10 +214,12 @@ namespace Rest_Rvw5.Controllers
         {
           if (ModelState.IsValid)
           {
-            string strUserId = SignInManager.GetVerifiedUserId();
-            if (strUserId != null)
-            {
-              var user = UserManager.FindById(strUserId);
+            var user = UserManager.FindByEmail("gayleh@inebraska.com");
+
+            //string strUserId = await SignInManager.GetVerifiedUserIdAsync(); 
+            //if (strUserId != null)
+            //{
+            //var user = await UserManager.FindByIdAsync(strUserId);
 
               user.ScreenName = model.ScreenName;
               user.FirstName = model.FirstName;
@@ -209,7 +229,7 @@ namespace Rest_Rvw5.Controllers
               user.City = model.City;
               user.State = model.State;
               user.Zip = model.Zip;
-              user.UserSince = DateTime.Now;
+              //user.UserSince = DateTime.Now;
 
               var result = await UserManager.UpdateAsync(user);
 
@@ -218,7 +238,7 @@ namespace Rest_Rvw5.Controllers
                 return RedirectToAction("Index", "Home");
               }
               AddErrors(result);
-            }
+            //}
           }
           // If we got this far, something failed, redisplay form
           return View(model);          
