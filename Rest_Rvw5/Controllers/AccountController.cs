@@ -10,7 +10,7 @@ using Rest_Rvw5.Models;
 
 namespace Rest_Rvw5.Controllers
 {
-  [Authorize]
+    [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -20,7 +20,7 @@ namespace Rest_Rvw5.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -32,9 +32,9 @@ namespace Rest_Rvw5.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -118,7 +118,7 @@ namespace Rest_Rvw5.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -164,8 +164,8 @@ namespace Rest_Rvw5.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -185,12 +185,11 @@ namespace Rest_Rvw5.Controllers
         // GET: /Account/Update Acct Info
         public async Task<ActionResult> UpdateAcctInfo()
         {
-          // string userId = await SignInManager.GetVerifiedUserIdAsync();
-          //if (userId != null)
-          //{
-          //ApplicationUser user = await UserManager.FindByIdAsync(userId);
-          var user = UserManager.FindByEmail("gayleh@inebraska.com");
-          return View(new UpdateAcctInfoModel {
+            var userId = User.Identity.GetUserId();
+            ApplicationUser user = await UserManager.FindByIdAsync(userId);
+
+            return View(new UpdateAcctInfoModel
+            {
                 Email = user.Email,
                 ScreenName = user.ScreenName,
                 FirstName = user.FirstName,
@@ -200,10 +199,7 @@ namespace Rest_Rvw5.Controllers
                 City = user.City,
                 State = user.State,
                 Zip = user.Zip
-              });
-            //}
-            //else
-              //return View("Error");
+            });
         }
 
         //
@@ -212,41 +208,37 @@ namespace Rest_Rvw5.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> UpdateAcctInfo(UpdateAcctInfoModel model)
         {
-          if (ModelState.IsValid)
-          {
-            var user = UserManager.FindByEmail("gayleh@inebraska.com");
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
 
-            //string strUserId = await SignInManager.GetVerifiedUserIdAsync(); 
-            //if (strUserId != null)
-            //{
-            //var user = await UserManager.FindByIdAsync(strUserId);
+                var user = await UserManager.FindByIdAsync(userId);
 
-              user.ScreenName = model.ScreenName;
-              user.FirstName = model.FirstName;
-              user.LastName = model.LastName;
-              user.Address = model.Address;
-              user.Address2 = model.Address2;
-              user.City = model.City;
-              user.State = model.State;
-              user.Zip = model.Zip;
-              //user.UserSince = DateTime.Now;
+                user.ScreenName = model.ScreenName;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Address = model.Address;
+                user.Address2 = model.Address2;
+                user.City = model.City;
+                user.State = model.State;
+                user.Zip = model.Zip;
+                //user.UserSince = DateTime.Now;
 
-              var result = await UserManager.UpdateAsync(user);
+                var result = await UserManager.UpdateAsync(user);
 
-              if (result.Succeeded)
-              {
-                return RedirectToAction("Index", "Home");
-              }
-              AddErrors(result);
-            //}
-          }
-          // If we got this far, something failed, redisplay form
-          return View(model);          
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
 
-    //
-    // GET: /Account/ConfirmEmail
-    [AllowAnonymous]
+        //
+        // GET: /Account/ConfirmEmail
+        [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
