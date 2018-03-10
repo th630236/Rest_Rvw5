@@ -11,7 +11,7 @@ using Rest_Rvw5.Models;
 namespace Rest_Rvw5.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : Controller // Gartenkraft made no change to this class.  I have made additions to it.  (Tim H Note)
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;

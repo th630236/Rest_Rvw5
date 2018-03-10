@@ -10,18 +10,18 @@ namespace Rest_Rvw5.Controllers
   {
     public ActionResult Index()
     {
-      return View();
+      return View();  // Gartenkraft commented all but this line in this function. (They had added UserInRole("Admin") etc.) (Tim H Note)
     }
 
-    public ActionResult About()
-    {
+    public ActionResult About()  // Gartenkraft commented this function (Tim H Note)
+        {
       ViewBag.Message = "Your application description page.";
 
       return View();
     }
 
-    public ActionResult Contact()
-    {
+    public ActionResult Contact()  // Gartenkraft commented this function (Tim H Note)
+        {
       ViewBag.Message = "Your contact page.";
 
       return View();

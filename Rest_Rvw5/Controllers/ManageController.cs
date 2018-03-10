@@ -7,6 +7,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Rest_Rvw5.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Net;
 
 namespace Rest_Rvw5.Controllers
 {
@@ -15,15 +17,20 @@ namespace Rest_Rvw5.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationRoleManager _roleManager; // Gartenkraft added this line (Tim H Note)
+        //private GartenkraftEntities db; // Gartenkraft added this line (Tim H Note)
 
         public ManageController()
         {
+            // db = new GartenkraftEntities(); db = new GartenkraftEntities(); Gartenkraft added this line (Tim H Note)
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager) // Gartenkraft added ", ApplicationRoleManager roleManager" (Tim H Note)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            RoleManager = roleManager; // Gartenkraft added this line(Tim H Note)
+            // db = new GartenkraftEntities(); // Gartenkraft added this line(Tim H Note)
         }
 
         public ApplicationSignInManager SignInManager
@@ -47,6 +54,18 @@ namespace Rest_Rvw5.Controllers
             private set
             {
                 _userManager = value;
+            }
+        }
+
+        public ApplicationRoleManager RoleManager  // Gartenkraft added this property (Tim H Note)
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
             }
         }
 
@@ -238,7 +257,9 @@ namespace Rest_Rvw5.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess }); // Gartenkraft commented this line (Tim H Note)
+                // ViewBag.StatusMessage = "Your password has been succesfully changed"; // Gartenkraft added this line and the next one commented in (Tim H Note)
+                // return View();
             }
             AddErrors(result);
             return View(model);
@@ -321,6 +342,210 @@ namespace Rest_Rvw5.Controllers
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
+
+        #region Roles  // This region added by Gartenkraft (Tim H Note)
+
+        public ActionResult ManageRoles()
+        {
+            var roles = RoleManager.Roles.ToList();
+            var roleModels = new List<RoleViewModel>();
+            foreach (var i in roles) { roleModels.Add(new RoleViewModel() { Id = i.Id, Name = i.Name }); }
+            return View(roleModels);
+        }
+
+        public ActionResult CreateRole()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateRole(RoleViewModel role)
+        {
+            if (ModelState.IsValid)
+            {
+                // validation for if role exist
+                if (RoleManager.RoleExists(role.Name))
+                {
+                    ViewBag.ErrorMessage = "Role name already exist";
+                    return View(role);
+                }
+                RoleManager.Create(new IdentityRole() { Name = role.Name });
+            }
+            return RedirectToAction("ManageRoles");
+        }
+
+        public ActionResult EditRole(string id)
+        {
+            var editRole = RoleManager.Roles.SingleOrDefault(r => r.Id == id);
+            if (editRole == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var editRoleModel = new RoleViewModel() { Id = editRole.Id, Name = editRole.Name };
+            return View(editRoleModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditRole(RoleViewModel role)
+        {
+            if (ModelState.IsValid)
+            {
+                RoleManager.Update(new IdentityRole() { Id = role.Id, Name = role.Name });
+                return RedirectToAction("ManageRoles");
+            }
+            return View(role);
+        }
+
+        public ActionResult DeleteRole(string id)
+        {
+            var deleteRole = RoleManager.Roles.SingleOrDefault(r => r.Id == id);
+            if (deleteRole == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var deleteRoleModel = new RoleViewModel() { Id = deleteRole.Id, Name = deleteRole.Name };
+            return View(deleteRoleModel);
+        }
+
+        [HttpPost, ActionName("DeleteRole")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteRoleConfirm(string id)
+        {
+            var deleteRole = RoleManager.Roles.SingleOrDefault(r => r.Id == id);
+            if (deleteRole == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            RoleManager.Delete(deleteRole);
+            return RedirectToAction("ManageRoles");
+        }
+
+        #endregion // // Above region added by Gartenkraft (Tim H Note)
+
+
+
+        #region Profile & Admins // This region added by Gartenkraft (Tim H Note)
+
+        //public ActionResult MakeAdmin()
+        //{
+        //    UserManager.AddToRole(User.Identity.GetUserId(), "Admin");
+        //    return RedirectToAction("Index", "Home");
+        //}
+
+        public ActionResult ManageAdmins()
+        {
+            var roleID = RoleManager.FindByName("Admin").Id;
+            var admins = UserManager.Users.Where(u => u.Roles.FirstOrDefault(r => r.RoleId == roleID) != null).ToList();
+
+            return View(admins);
+        }
+
+        public ActionResult CreateAdmin()
+        {
+            ViewBag.ErrorMessage = "";
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateAdmin(AdminViewModel model)
+        {
+            var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, PhoneNumber = model.PhoneNumber };
+            var result = await UserManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                var userID = UserManager.FindByName(user.UserName).Id;
+                var roleResult = UserManager.AddToRole(userID, "Admin");
+                if (roleResult.Succeeded)
+                {
+                    return RedirectToAction("ManageAdmins", "Manage");
+                }
+            }
+            // If we got this far, something failed, redisplay form and delete the newly created user
+            var deleteUser = UserManager.FindByName(user.UserName);
+            UserManager.Delete(deleteUser);
+            ViewBag.ErrorMessage = "Something went wrong. Please contact your administrator. Unable to create an admin.";
+            return View(model);
+        }
+
+        public ActionResult DeleteAdmin(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var admin = UserManager.FindById(id);
+            var adminModel = new AdminViewModel()
+            {
+                Email = admin.Email,
+                PhoneNumber = admin.PhoneNumber,
+                FirstName = admin.FirstName,
+                LastName = admin.LastName
+            };
+            ViewBag.ID = id;
+            return View(adminModel);
+        }
+
+        [HttpPost, ActionName("DeleteAdmin")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteAdminConfirm(string id)
+        {
+            UserManager.RemoveFromRole(id, "Admin");
+            var deleteUser = UserManager.FindById(id);
+            UserManager.Delete(deleteUser);
+            return RedirectToAction("ManageAdmins");
+        }
+
+        public ActionResult ManageProfile()
+        {
+            var userID = User.Identity.GetUserId();
+            var userProfile = UserManager.Users.FirstOrDefault(u => u.Id == userID);
+            if (userProfile == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.ErrorMessage = "";
+            //ViewBag.States = XmlHelper.GetStates(Server, Url);
+            //ViewBag.Countries = XmlHelper.GetCountries(Server, Url);
+            return View(userProfile);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ManageProfile(ApplicationUser user)
+        {
+            ViewBag.ErrorMessage = "Unable to update your profile. Please try again.";
+            if (ModelState.IsValid)
+            {
+                var newUser = UserManager.Users.SingleOrDefault(u => u.Id == user.Id);
+                if (newUser == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                newUser.Email = user.Email;
+                newUser.UserName = user.Email;
+                newUser.FirstName = user.FirstName;
+                newUser.LastName = user.LastName;
+                newUser.Address = user.Address;
+                newUser.Address2 = user.Address2;
+                newUser.City = user.City;
+                newUser.State = user.State;
+                newUser.Zip = user.Zip;
+                newUser.Zip = user.Zip;
+                //newUser.Country = user.Country;
+                newUser.PhoneNumber = user.PhoneNumber;
+
+                UserManager.Update(newUser);
+                ViewBag.ErrorMessage = "Profile was succesfully updated.";
+            }
+            //ViewBag.States = XmlHelper.GetStates(Server, Url);
+            //ViewBag.Countries = XmlHelper.GetCountries(Server, Url);
+            return View(user);
+        }
+
+        #endregion   // Above region added by Gartenkraft (Tim H Note)
 
         protected override void Dispose(bool disposing)
         {

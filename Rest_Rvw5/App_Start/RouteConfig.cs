@@ -17,6 +17,7 @@ namespace Rest_Rvw5
           name: "Default",
           url: "{controller}/{action}/{id}",
           defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+          // namespaces: new[] { "Gartenkraft.Controllers" } // In Gartenkraft there is , at end of previous line and this line is added (Tim H Note)
       );
     }
   }

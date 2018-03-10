@@ -18,6 +18,7 @@ namespace Rest_Rvw5
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create); // This line was added in Gartenkraft (Tim H Note)
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -50,19 +51,19 @@ namespace Rest_Rvw5
             //    clientId: "",
             //    clientSecret: "");
 
-      //app.UseTwitterAuthentication(
-      //   consumerKey: "",
-      //   consumerSecret: "");
+            //app.UseTwitterAuthentication(
+            //   consumerKey: "",
+            //   consumerSecret: "");
 
-      //app.UseFacebookAuthentication(
-      //   appId: "",
-      //   appSecret: "");
+            //app.UseFacebookAuthentication(
+            //   appId: "",
+            //   appSecret: "");
 
-      //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-      //{
-      //    ClientId = "",
-      //    ClientSecret = ""
-      //});
-    }
+            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            //{
+            //    ClientId = "",
+            //    ClientSecret = ""
+            //});
+        }
     }
 }
