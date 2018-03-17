@@ -266,16 +266,27 @@
     <Compile Include="Migrations\201802120648528_Unknown-chngs-2-AcctCtrlr-AcctVwMdl.Designer.cs">
       <DependentUpon>201802120648528_Unknown-chngs-2-AcctCtrlr-AcctVwMdl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803160454220_Roles.cs" />
+    <Compile Include="Migrations\201803160454220_Roles.Designer.cs">
+      <DependentUpon>201803160454220_Roles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803170717390_Role-Manage-cshtml.cs" />
+    <Compile Include="Migrations\201803170717390_Role-Manage-cshtml.Designer.cs">
+      <DependentUpon>201803170717390_Role-Manage-cshtml.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\AnswerOpt.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\ApplicationRole.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\Restaurant.cs" />
     <Compile Include="Models\Review.cs" />
+    <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\WebSiteComment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -338,6 +349,13 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\UpdateAcctInfo.cshtml" />
+    <Content Include="Views\Manage\CreateAdmin.cshtml" />
+    <Content Include="Views\Manage\CreateRole.cshtml" />
+    <Content Include="Views\Manage\DeleteAdmin.cshtml" />
+    <Content Include="Views\Manage\DeleteRole.cshtml" />
+    <Content Include="Views\Manage\EditRole.cshtml" />
+    <Content Include="Views\Manage\ManageAdmins.cshtml" />
+    <Content Include="Views\Manage\ManageRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -406,6 +424,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802120648528_Unknown-chngs-2-AcctCtrlr-AcctVwMdl.resx">
       <DependentUpon>201802120648528_Unknown-chngs-2-AcctCtrlr-AcctVwMdl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803160454220_Roles.resx">
+      <DependentUpon>201803160454220_Roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803170717390_Role-Manage-cshtml.resx">
+      <DependentUpon>201803170717390_Role-Manage-cshtml.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
