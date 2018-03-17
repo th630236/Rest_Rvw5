@@ -18,7 +18,7 @@ namespace Rest_Rvw5.Migrations
                         ReviewTitle = c.String(),
                         OverallRating = c.Single(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.ReviewId);
             
             CreateTable(
                 "dbo.WebSiteComments",
