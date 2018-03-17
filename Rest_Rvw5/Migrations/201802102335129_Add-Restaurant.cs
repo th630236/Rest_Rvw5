@@ -12,7 +12,7 @@ namespace Rest_Rvw5.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        UserId = c.Int(nullable: false),
+                        UserId = c.String(maxLength: 128),
                         RestaurantId = c.Int(nullable: false),
                         ReviewDate = c.DateTime(nullable: false),
                         ReviewTitle = c.String(),

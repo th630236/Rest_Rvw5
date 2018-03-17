@@ -20,10 +20,10 @@ namespace Rest_Rvw5.Migrations
                     })
                 .PrimaryKey(t => t.QuestionId);
             
-            AddColumn("dbo.Reviews", "ReviewId", c => c.Int(nullable: false, identity: true));
+            //AddColumn("dbo.Reviews", "ReviewId", c => c.Int(nullable: false, identity: true));
             AlterColumn("dbo.Reviews", "UserId", c => c.String(maxLength: 128));
             AlterColumn("dbo.WebSiteComments", "UserId", c => c.String(maxLength: 128));
-            AddPrimaryKey("dbo.Reviews", "ReviewId");
+            //AddPrimaryKey("dbo.Reviews", "ReviewId");
             CreateIndex("dbo.Answers", "ReviewId");
             CreateIndex("dbo.Answers", "QuestionId");
             CreateIndex("dbo.Reviews", "UserId");
@@ -39,7 +39,7 @@ namespace Rest_Rvw5.Migrations
         
         public override void Down()
         {
-            AddColumn("dbo.Reviews", "Id", c => c.Int(nullable: false, identity: true));
+            //AddColumn("dbo.Reviews", "Id", c => c.Int(nullable: false, identity: true));
             DropForeignKey("dbo.WebSiteComments", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Answers", "ReviewId", "dbo.Reviews");
             DropForeignKey("dbo.Reviews", "RestaurantId", "dbo.Restaurants");
@@ -53,9 +53,9 @@ namespace Rest_Rvw5.Migrations
             DropPrimaryKey("dbo.Reviews");
             AlterColumn("dbo.WebSiteComments", "UserId", c => c.String());
             AlterColumn("dbo.Reviews", "UserId", c => c.String());
-            DropColumn("dbo.Reviews", "ReviewId");
+            //DropColumn("dbo.Reviews", "ReviewId");
             DropTable("dbo.Questions");
-            AddPrimaryKey("dbo.Reviews", "Id");
+            //AddPrimaryKey("dbo.Reviews", "Id");
         }
     }
 }

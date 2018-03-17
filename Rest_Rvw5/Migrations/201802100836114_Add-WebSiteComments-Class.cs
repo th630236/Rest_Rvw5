@@ -12,7 +12,7 @@ namespace Rest_Rvw5.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        UserID = c.Int(nullable: false),
+                        UserId = c.String(maxLength: 128),
                         Date = c.DateTime(nullable: false),
                         Comment = c.String(),
                     })
