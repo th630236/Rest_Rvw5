@@ -9,6 +9,7 @@ using Microsoft.Owin.Security;
 using Rest_Rvw5.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Net;
+using System.Collections.Generic;
 
 namespace Rest_Rvw5.Controllers
 {
@@ -450,7 +451,7 @@ namespace Rest_Rvw5.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateAdmin(AdminViewModel model)
+        public async Task<ActionResult> CreateAdmin(AdminViewModel model)  
         {
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, PhoneNumber = model.PhoneNumber };
             var result = await UserManager.CreateAsync(user, model.Password);

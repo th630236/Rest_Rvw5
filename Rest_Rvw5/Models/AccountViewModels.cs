@@ -124,29 +124,6 @@ namespace Rest_Rvw5.Models
   {
     public UpdateAcctInfoModel()
     {
-      /*
-      var userManager = (ApplicationUserManager)HttpContext.Current.GetOwinContext().Get<ApplicationUserManager>();
-      var SignInManager = (ApplicationSignInManager)HttpContext.Current.GetOwinContext().Get<ApplicationSignInManager>();
-
-      string strUserId = SignInManager.GetVerifiedUserId();
-      if (strUserId != null)
-      {
-        var user = userManager.FindById(strUserId);
-
-        Email = user.Email;
-        ScreenName = user.ScreenName;
-        FirstName = user.FirstName;
-        LastName = user.LastName;
-        Address = user.Address;
-        Address2 = user.Address2;
-        City = user.City;
-        State = user.State;
-        Zip = user.Zip;
-
-        //var user = (ApplicationUser)GetOwinContext().Get<ApplicationUserManager>();
-        //ApplicationUser au = OwinContext
-        
-      } */
     }
 
     [Required]

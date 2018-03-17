@@ -22,5 +22,6 @@ namespace Rest_Rvw5.Models
     public DbSet<Answer> Answers { get; set; }
     public DbSet<AnswerOpt> AnswerOpts { get; set; }
     public DbSet<Question> Questions { get; set; }
+    public DbSet<ApplicationRole> IdentityRoles { get; set; }
   }
 }
