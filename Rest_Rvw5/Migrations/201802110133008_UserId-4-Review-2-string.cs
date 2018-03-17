@@ -7,12 +7,12 @@ namespace Rest_Rvw5.Migrations
     {
         public override void Up()
         {
-            AlterColumn("dbo.Reviews", "UserId", c => c.String());
+            AlterColumn("dbo.Reviews", "UserId", c => c.String(maxLength: 128));
         }
         
         public override void Down()
         {
-            AlterColumn("dbo.Reviews", "UserId", c => c.Int(nullable: false));
+            AlterColumn("dbo.Reviews", "UserId", c => c.String(maxLength: 128));
         }
     }
 }
