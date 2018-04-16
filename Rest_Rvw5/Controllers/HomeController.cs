@@ -40,6 +40,7 @@ namespace Rest_Rvw5.Controllers
       return View();
     }
 
+    [Authorize]
     public ActionResult Contact()  // Gartenkraft commented this function (Tim H Note)
         {
       ViewBag.Message = "Your contact page.";
